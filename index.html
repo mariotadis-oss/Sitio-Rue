@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CEIEG Chiapas | Registro Nacional de Unidades de Estado 2026 (RUE)</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+
+  <!-- FontAwesome 6 (Iconos) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- CONFIGURACIÓN DE PALETA OFICIAL Y TIPOGRAFÍAS -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'chiapas-verde': '#009885',
+            'chiapas-magenta': '#c90166',
+            'chiapas-rojo': '#AE192D',
+            'chiapas-arena': '#D3C2B4',
+            'chiapas-negro': '#000000',
+            'chiapas-blanco': '#ffffff',
+          },
+          fontFamily: {
+            sans: ['Gilroy', 'Inter', 'sans-serif'],
+            banner: ['Novecento Wide', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- DECLARACIÓN DE FUENTES LOCALES (Carpeta fonts/) -->
+  <style>
+    @font-face {
+      font-family: 'Gilroy';
+      src: url('./fonts/Gilroy-Regular.ttf') format('truetype');
+      font-weight: 400;
+      font-style: normal;
+    }
+
+    @font-face {
+      font-family: 'Gilroy';
+      src: url('./fonts/Gilroy-Medium.ttf') format('truetype');
+      font-weight: 500;
+      font-style: normal;
+    }
+
+    @font-face {
+      font-family: 'Gilroy';
+      src: url('./fonts/Gilroy-Bold.ttf') format('truetype');
+      font-weight: 700;
+      font-style: normal;
+    }
+
+    @font-face {
+      font-family: 'Novecento Wide';
+      src: url('./fonts/Novecento WideSemiBold.otf') format('opentype');
+      font-weight: 600;
+      font-style: normal;
+    }
+
+    @media print {
+      .no-print {
+        display: none !important;
+      }
+
+      body {
+        background: white !important;
+        color: black !important;
+      }
+    }
+  </style>
+</head>
+
+<body
+  class="bg-[#f7f6f4] text-chiapas-negro font-sans antialiased selection:bg-chiapas-rojo selection:text-white min-h-screen flex flex-col">
+
+  <!-- ==================== HEADER A PANTALLA COMPLETA ==================== -->
+  <header class="w-full bg-[#0098da]">
+    <div class="w-full">
+      <img src="./img/banner_rue.png" alt="Registro Nacional de Unidades de Estado 2026 - RUE 2026 | CEIEG Chiapas"
+        class="w-full h-auto block object-cover" />
+    </div>
+  </header>
+
+  <!-- ==================== CUERPO PRINCIPAL ==================== -->
+  <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12 flex-1 space-y-10">
+
+    <!-- 1. FUNDAMENTO Y OBJETIVO -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+      <!-- Tarjeta: Fundamento -->
+      <section
+        class="bg-chiapas-blanco p-6 sm:p-8 shadow-sm border border-chiapas-arena/60 hover:shadow-md transition-shadow duration-200 flex flex-col border-t-4 border-t-chiapas-rojo">
+        <div class="flex items-center gap-3 mb-4">
+          <div
+            class="w-10 h-10 bg-chiapas-rojo/10 text-chiapas-rojo flex items-center justify-center text-lg border border-chiapas-rojo/20">
+            <i class="fa-solid fa-scale-balanced"></i>
+          </div>
+          <h3 class="text-xl font-bold text-chiapas-negro">Fundamento</h3>
+        </div>
+        <p class="text-neutral-700 text-sm sm:text-base leading-relaxed text-justify">
+          Considerando la <strong class="text-chiapas-negro">Ley del Sistema Nacional de Información Estadística y
+            Geográfica (SNIEG)</strong>, Arts. 2, 33, 55 y 63, así como parte de las actividades del <strong
+            class="text-chiapas-negro">Comité Estatal de Información Estadística y Geográfica del Estado de Chiapas
+            (CEIEG)</strong>, y derivado del acuerdo de la Reunión Virtual Informativa Nacional, encabezada por
+          autoridades del SNIEG el 29 de septiembre de 2026, se plantea formalmente integrar por primera vez el <strong
+            class="text-chiapas-rojo">Registro Nacional de Unidades de Estado, 2026</strong>.
+        </p>
+      </section>
+
+      <!-- Tarjeta: Objetivo -->
+      <section
+        class="bg-chiapas-blanco p-6 sm:p-8 shadow-sm border border-chiapas-arena/60 hover:shadow-md transition-shadow duration-200 flex flex-col border-t-4 border-t-chiapas-verde">
+        <div class="flex items-center gap-3 mb-4">
+          <div
+            class="w-10 h-10 bg-chiapas-verde/10 text-chiapas-verde flex items-center justify-center text-lg border border-chiapas-verde/20">
+            <i class="fa-solid fa-bullseye"></i>
+          </div>
+          <h3 class="text-xl font-bold text-chiapas-negro">Objetivo</h3>
+        </div>
+        <p class="text-neutral-700 text-sm sm:text-base leading-relaxed text-justify">
+          Contar con el universo de las <strong class="text-chiapas-negro">unidades administrativas (UA)</strong> de las
+          dependencias de los tres poderes, sus organismos, desconcentrados y descentralizados, así como autónomos que
+          explícitamente cuenten con atribuciones para producir información estadística y geográfica, y generar
+          registros administrativos en el ámbito estatal.
+        </p>
+      </section>
+
+    </div>
+
+    <!-- 2. MATERIALES Y PROCEDIMIENTO + DESCARGA -->
+    <section
+      class="bg-chiapas-blanco p-6 sm:p-8 shadow-sm border border-chiapas-arena/60 hover:shadow-md transition-shadow duration-200">
+
+      <div class="flex items-center gap-3 mb-6">
+        <div
+          class="w-10 h-10 bg-chiapas-verde/10 text-chiapas-verde flex items-center justify-center text-lg border border-chiapas-verde/20">
+          <i class="fa-solid fa-folder-open"></i>
+        </div>
+        <h3 class="text-xl sm:text-2xl font-bold text-chiapas-negro">Materiales y procedimiento</h3>
+      </div>
+
+      <p class="text-neutral-700 text-base mb-6 leading-relaxed">
+        Para tal fin, se pone a disposición el siguiente formato (instructivo y ejemplo incluido):
+      </p>
+
+      <!-- CAJA Y BOTÓN DE DESCARGA DIRECTA -->
+      <div
+        class="bg-gradient-to-r from-chiapas-arena/20 via-white to-chiapas-arena/20 border-2 border-chiapas-arena p-6 sm:p-8 mb-8 text-center sm:text-left flex flex-col sm:flex-row items-center justify-between gap-6 shadow-sm">
+
+        <div class="space-y-1">
+          <div
+            class="inline-flex items-center gap-2 px-2.5 py-1 bg-chiapas-rojo text-white text-xs font-semibold uppercase tracking-wider mb-1">
+            <i class="fa-solid fa-file-excel"></i> Formato Oficial RUE 2026 (.xlsx)
+          </div>
+          <h4 class="text-lg sm:text-xl font-bold text-chiapas-negro">
+            Listado de instituciones e identificación de Unidades de Estado
+          </h4>
+          <p class="text-neutral-600 text-xs sm:text-sm">
+            Plantilla oficial en Excel con catálogo y estructura para el requisitado.
+          </p>
+        </div>
+
+        <a href="./docs/Chis_Listado de instituciones y UE 2026_26_10_para el sitio.xlsx"
+          download="Chis_Listado de instituciones y UE 2026_26_10_para el sitio.xlsx"
+          class="inline-flex items-center justify-center gap-3 px-6 py-3.5 bg-chiapas-rojo hover:bg-[#8a1222] text-white font-bold shadow-md hover:shadow-lg transition-all duration-200 shrink-0 group focus:ring-4 focus:ring-chiapas-rojo/30 cursor-pointer">
+          <i
+            class="fa-solid fa-file-arrow-down text-lg text-chiapas-arena group-hover:translate-y-0.5 transition-transform"></i>
+          <span>Descargar formato (.xlsx)</span>
+        </a>
+
+      </div>
+
+      <!-- INSTRUCCIONES DEL ENLACE INSTITUCIONAL EN LISTA -->
+      <div
+        class="space-y-4 text-neutral-700 text-sm sm:text-base leading-relaxed text-justify border-t border-chiapas-arena/40 pt-6">
+
+        <p>
+          A fin de que el <strong class="text-chiapas-negro">Enlace Institucional</strong> designado por cada
+          Dependencia, coordine la actualización, depuración y validación de dicho Listado:
+        </p>
+
+        <div class="space-y-3 pl-2 sm:pl-4">
+
+          <div class="flex items-start gap-3">
+            <span class="w-2.5 h-2.5 bg-chiapas-rojo mt-2 shrink-0"></span>
+            <p class="flex-1">
+              Lo anterior implicará la revisión del marco jurídico-normativo y de las estructuras orgánico-ocupacionales
+              autorizadas, de la Unidad de Estado, incluyendo los órganos administrativos desconcentrados y
+              descentralizados, así como los órganos autónomos.
+            </p>
+          </div>
+
+          <div class="flex items-start gap-3">
+            <span class="w-2.5 h-2.5 bg-chiapas-rojo mt-2 shrink-0"></span>
+            <p class="flex-1">
+              A fin de recopilar e integrar la información, conforme a los campos ahí especificados, de las diversas
+              áreas administrativas que les correspondan, y que específica y exclusivamente tengan como atribución:
+            </p>
+          </div>
+
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4 pt-2">
+          <div class="flex items-start gap-3 bg-[#fbfaf8] border border-chiapas-arena/60 p-4">
+            <div
+              class="w-6 h-6 bg-chiapas-verde/15 text-chiapas-verde flex items-center justify-center text-xs shrink-0 mt-0.5">
+              <i class="fa-solid fa-check"></i>
+            </div>
+            <span class="font-medium text-chiapas-negro text-sm">Producir información estadística y/o geográfica.</span>
+          </div>
+
+          <div class="flex items-start gap-3 bg-[#fbfaf8] border border-chiapas-arena/60 p-4">
+            <div
+              class="w-6 h-6 bg-chiapas-verde/15 text-chiapas-verde flex items-center justify-center text-xs shrink-0 mt-0.5">
+              <i class="fa-solid fa-check"></i>
+            </div>
+            <span class="font-medium text-chiapas-negro text-sm">Generar registros administrativos.</span>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- 3. CONCEPTOS A CONSIDERAR Y ENTENDER -->
+    <section
+      class="bg-chiapas-blanco p-6 sm:p-8 shadow-sm border border-chiapas-arena/60 hover:shadow-md transition-shadow duration-200 space-y-6">
+
+      <div class="flex items-center gap-3">
+        <div
+          class="w-10 h-10 bg-chiapas-arena/20 text-chiapas-negro flex items-center justify-center text-lg border border-chiapas-arena/40">
+          <i class="fa-solid fa-book-bookmark"></i>
+        </div>
+        <h3 class="text-xl sm:text-2xl font-bold text-chiapas-negro">
+          ¿Qué deberá considerarse y entenderse para atender a dichos conceptos?
+        </h3>
+      </div>
+
+      <div class="space-y-5">
+
+        <!-- Información estadística -->
+        <div class="border-l-4 border-chiapas-rojo bg-[#fdfbfb] p-5 border-y border-r border-chiapas-arena/40">
+          <div class="flex items-center gap-2 mb-2">
+            <i class="fa-solid fa-chart-pie text-chiapas-rojo"></i>
+            <h4 class="font-bold text-chiapas-negro text-base">Información estadística</h4>
+          </div>
+          <p class="text-neutral-700 text-sm leading-relaxed text-justify">
+            Conjunto de resultados cuantitativos o datos que se obtienen de las Actividades Estadísticas y Geográficas
+            en materia estadística, tomando como base los datos primarios obtenidos de los Informantes del Sistema sobre
+            hechos que son relevantes para el conocimiento de los fenómenos económicos, gobierno, seguridad pública e
+            impartición de justicia; demográficos y sociales, así como sus relaciones con el medio ambiente y el espacio
+            territorial.
+          </p>
+        </div>
+
+        <!-- Información geográfica -->
+        <div class="border-l-4 border-chiapas-verde bg-[#f7fcfb] p-5 border-y border-r border-chiapas-arena/40">
+          <div class="flex items-center gap-2 mb-2">
+            <i class="fa-solid fa-map-location-dot text-chiapas-verde"></i>
+            <h4 class="font-bold text-chiapas-negro text-base">Información geográfica</h4>
+          </div>
+          <p class="text-neutral-700 text-sm leading-relaxed text-justify">
+            Conjunto organizado de datos espaciales georreferenciados, que mediante símbolos y códigos genera el
+            conocimiento acerca de las condiciones físico ambientales, de los recursos naturales y de las obras de
+            naturaleza antrópica del territorio nacional.
+          </p>
+        </div>
+
+        <!-- Registro administrativo -->
+        <div
+          class="border-l-4 border-chiapas-magenta bg-[#fdf7fa] p-5 border-y border-r border-chiapas-arena/40 space-y-3">
+          <div class="flex items-center gap-2">
+            <i class="fa-solid fa-file-lines text-chiapas-magenta"></i>
+            <h4 class="font-bold text-chiapas-negro text-base">Registro administrativo</h4>
+          </div>
+          <p class="text-neutral-700 text-sm leading-relaxed text-justify">
+            Conjunto de datos que fueron generados con fines operacionales o como parte de las funciones de una
+            institución pública o privada sobre un tipo de objeto, sujeto, acción, hecho o evento, y obtenidos
+            sistemáticamente con base en un formato específico ya sea impreso, digital u otro y bajo un marco de
+            funciones y facultades formalmente establecidas en instrumentos jurídicos o reglamentarios (NTPPIEG para el
+            INEGI Art. 3, F. XXXV).
+          </p>
+
+          <div class="bg-chiapas-arena/30 border border-chiapas-arena p-3.5 flex items-start gap-3 text-chiapas-negro">
+            <i class="fa-solid fa-circle-exclamation text-chiapas-rojo mt-0.5 shrink-0"></i>
+            <div class="text-xs sm:text-sm leading-relaxed">
+              <strong class="font-bold text-chiapas-negro">Nota de exclusión obligatoria:</strong> Se excluyen los
+              registros vinculados a funciones administrativas internas o de operación cotidiana, como controles de
+              asistencia y retardos del personal, así como los generados por instituciones particulares o privadas.
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- 4. INDICACIONES DE ENVÍO -->
+    <section
+      class="bg-chiapas-blanco p-6 sm:p-8 shadow-sm border border-chiapas-arena/60 hover:shadow-md transition-shadow duration-200 space-y-6">
+
+      <div class="flex items-center gap-3">
+        <div
+          class="w-10 h-10 bg-chiapas-rojo/10 text-chiapas-rojo flex items-center justify-center text-lg border border-chiapas-rojo/20">
+          <i class="fa-solid fa-list-check"></i>
+        </div>
+        <h3 class="text-xl sm:text-2xl font-bold text-chiapas-negro">Indicaciones</h3>
+      </div>
+
+      <div class="space-y-4">
+
+        <div class="flex items-start gap-4 p-4 bg-[#fbfaf8] border border-chiapas-arena/60">
+          <div
+            class="w-7 h-7 bg-chiapas-rojo text-white flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">
+            1
+          </div>
+          <div class="text-sm sm:text-base text-chiapas-negro">
+            <strong>Descargar, requisitar y enviar el Formato.</strong>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-4 p-4 bg-[#fbfaf8] border border-chiapas-arena/60">
+          <div
+            class="w-7 h-7 bg-chiapas-rojo text-white flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">
+            2
+          </div>
+          <div class="space-y-2 text-sm sm:text-base text-chiapas-negro w-full">
+            <p>
+              <strong>Renombrar archivo antes de enviar</strong>, anteponiendo las siglas en mayúsculas de su Unidad de
+              Estado, ya sea Dependencia, Organismo Público Descentralizado, Desconcentrado o Autónomo:
+            </p>
+            <div
+              class="bg-white border border-chiapas-arena p-3 font-mono text-xs sm:text-sm text-chiapas-rojo flex items-center justify-between">
+              <div>
+                <span class="text-neutral-500 font-sans text-xs block">Ejemplo oficial:</span>
+                <span class="font-bold">SESALUD_CHIAPAS_RUE.2026.1</span>
+              </div>
+              <span class="text-xs bg-chiapas-arena/30 text-chiapas-negro px-2 py-1 font-sans font-medium">Nomenclatura
+                requerida</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-4 p-4 bg-[#fbfaf8] border border-chiapas-arena/60">
+          <div
+            class="w-7 h-7 bg-chiapas-rojo text-white flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">
+            3
+          </div>
+          <div class="space-y-2 text-sm sm:text-base text-chiapas-negro w-full">
+            <p>
+              <strong>Correos electrónicos</strong> a los que se enviará el archivo debidamente requisitado y editable
+              en Excel para su revisión:
+            </p>
+            <div class="flex flex-wrap items-center gap-3">
+              <a href="mailto:ceieg.chiapas@gmail.com"
+                class="inline-flex items-center gap-2 px-4 py-2 bg-chiapas-verde/10 hover:bg-chiapas-verde/20 border border-chiapas-verde/40 text-chiapas-verde font-bold text-sm transition-colors">
+                <i class="fa-solid fa-envelope text-chiapas-verde"></i>
+                <span>ceieg.chiapas@gmail.com</span>
+              </a>
+            </div>
+            <p class="text-xs sm:text-sm text-neutral-500 italic mt-1">
+              * En caso de requerirse alguna aclaración o complementación de la información recibida se le notificará
+              también por este medio y remitente.
+            </p>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-4 p-4 bg-[#fbfaf8] border border-chiapas-arena/60">
+          <div
+            class="w-7 h-7 bg-chiapas-rojo text-white flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">
+            4
+          </div>
+          <div class="text-sm sm:text-base text-chiapas-negro">
+            <strong>Notificar formalmente</strong> dicho envío mediante oficio en respuesta a la
+            <span
+              class="inline-block px-2.5 py-0.5 bg-chiapas-arena/40 text-chiapas-negro font-bold text-xs sm:text-sm border border-chiapas-arena">
+              Circular DGPEF/447/2026
+            </span>.
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- 5. FECHA LÍMITE Y CONTACTO -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+      <!-- Tarjeta: Fecha Límite (Con fondo rojo1.jpg) -->
+      <section
+        class="relative bg-cover bg-center text-white p-6 sm:p-8 shadow-sm flex flex-col justify-between border-t-4 border-t-chiapas-magenta overflow-hidden"
+        style="background-image: url('./img/rojo1.jpg');">
+      
+        <!-- Capa oscura sutil para asegurar perfecta legibilidad del texto blanco -->
+        <div class="absolute inset-0 bg-black/30 pointer-events-none"></div>
+      
+        <!-- Contenido de la tarjeta (con z-10 para estar al frente de la imagen) -->
+        <div class="relative z-10">
+          <div class="flex items-center gap-3 mb-4">
+            <div
+              class="w-10 h-10 bg-black/40 text-chiapas-arena flex items-center justify-center text-lg border border-chiapas-arena/40">
+              <i class="fa-solid fa-calendar-xmark"></i>
+            </div>
+            <h3 class="text-xl font-bold text-white">Fecha límite</h3>
+          </div>
+      
+          <p class="text-chiapas-arena text-sm mb-6 drop-shadow-sm">
+            Plazo máximo para el envío del formato debidamente requisitado y la notificación formal mediante oficio:
+          </p>
+      
+          <div class="bg-black/40 border border-chiapas-arena/40 p-4 text-center backdrop-blur-xs">
+            <div class="text-xs uppercase tracking-widest text-chiapas-arena font-bold mb-1">Cierre oficial</div>
+            <div class="text-xl sm:text-2xl font-extrabold text-white drop-shadow">Viernes 20 de noviembre de 2026</div>
+          </div>
+        </div>
+      
+        <div
+          class="relative z-10 mt-6 pt-4 border-t border-white/25 text-xs text-chiapas-arena flex items-center gap-2 drop-shadow-sm">
+          <i class="fa-solid fa-clock"></i>
+          <span>Recepción continua vía correo institucional hasta las 23:59 hrs.</span>
+        </div>
+      </section>
+
+      <!-- Tarjeta: Dudas y/o Comentarios -->
+      <section
+        class="bg-chiapas-blanco p-6 sm:p-8 shadow-sm border border-chiapas-arena/60 hover:shadow-md transition-shadow duration-200 flex flex-col justify-between border-t-4 border-t-chiapas-verde">
+        <div>
+          <div class="flex items-center gap-3 mb-4">
+            <div
+              class="w-10 h-10 bg-chiapas-verde/10 text-chiapas-verde flex items-center justify-center text-lg border border-chiapas-verde/20">
+              <i class="fa-solid fa-headset"></i>
+            </div>
+            <h3 class="text-xl font-bold text-chiapas-negro">Dudas y/o comentarios</h3>
+          </div>
+          <p class="text-neutral-700 text-sm leading-relaxed mb-6">
+            Para cualquier consulta sobre el llenado y envío del formato en la plataforma, se pone a su disposición el
+            contacto directo:
+          </p>
+
+          <div class="bg-[#fbfaf8] p-4 border border-chiapas-arena/60 space-y-3">
+            <div>
+              <div class="text-xs text-neutral-500 font-semibold uppercase tracking-wider">Atención y Asesoría</div>
+              <div class="text-base font-bold text-chiapas-negro">C. Mirna Martínez Ramos</div>
+              <div class="text-xs text-chiapas-rojo font-bold">Enlace Operativo del CEIEG Chiapas</div>
+            </div>
+
+            <div class="space-y-1.5 pt-2 border-t border-chiapas-arena/40 text-sm">
+              <div class="flex items-center gap-2.5 text-chiapas-negro">
+                <i class="fa-solid fa-phone text-neutral-400 w-4"></i>
+                <span><strong>Teléfono:</strong> 961 691 4043 ext. 65581</span>
+              </div>
+              <div class="flex items-center gap-2.5 text-chiapas-negro">
+                <i class="fa-solid fa-envelope text-neutral-400 w-4"></i>
+                <span><strong>Correo:</strong> <a href="mailto:mirna0528@gmail.com"
+                    class="text-chiapas-rojo hover:underline font-semibold">mirna0528@gmail.com</a></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-6 pt-4 border-t border-chiapas-arena/40 text-xs text-neutral-500 flex items-center gap-2">
+          <i class="fa-solid fa-building-columns"></i>
+          <span>Secretaría de Finanzas &bull; Subsecretaría de Planeación</span>
+        </div>
+      </section>
+
+    </div>
+
+  </main>
+
+</body>
+
+</html>
