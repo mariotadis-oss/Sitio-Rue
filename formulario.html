@@ -1,0 +1,1257 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CEIEG Chiapas | Cédula de Registro RUE 2026</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <!-- FontAwesome 6 (Iconos) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- CONFIGURACIÓN DE PALETA INSTITUCIONAL -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'chiapas-verde': '#009885',
+                        'chiapas-magenta': '#c90166',
+                        'chiapas-rojo': '#AE192D',
+                        'chiapas-arena': '#D3C2B4',
+                        'chiapas-negro': '#000000',
+                        'chiapas-blanco': '#ffffff',
+                    },
+                    fontFamily: {
+                        sans: ['Gilroy', 'Inter', 'sans-serif'],
+                        banner: ['Novecento Wide', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- DECLARACIÓN DE FUENTES LOCALES -->
+    <style>
+        @font-face {
+            font-family: 'Gilroy';
+            src: url('./fonts/Gilroy-Regular.ttf') format('truetype');
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'Gilroy';
+            src: url('./fonts/Gilroy-Medium.ttf') format('truetype');
+            font-weight: 500;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'Gilroy';
+            src: url('./fonts/Gilroy-Bold.ttf') format('truetype');
+            font-weight: 700;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'Novecento Wide';
+            src: url('./fonts/Novecento WideSemiBold.otf') format('opentype');
+            font-weight: 600;
+            font-style: normal;
+        }
+
+        [x-cloak] {
+            display: none !important;
+        }
+    </style>
+</head>
+
+<body
+    class="bg-[#f7f6f4] text-chiapas-negro font-sans antialiased selection:bg-chiapas-rojo selection:text-white min-h-screen flex flex-col"
+    x-data="{
+    // PASO 1: INSTITUCIÓN
+    municipioSeleccionado: '',
+    otroMunicipio: '',
+
+    institucionSeleccionada: '',
+    otraInstitucion: '',
+
+    naturalezaJuridica: '',
+    otraNaturaleza: '',
+
+    cuentaConUE: 'Sí',
+
+    // PASO 2: LISTADO DE UNIDADES ADMINISTRATIVAS (Almacén reactivo para Lalo)
+    unidades: [],
+
+    // CONTROL DEL MODAL
+    modalAbierto: false,
+    nuevaUnidad: {
+      nombre: '',
+      nivel: '',
+      tieneEst: 'No',
+      ordenamientoEst: '',
+      otroOrdenamientoEst: '',
+      nombreOrdenamientoEst: '',
+      fechaEst: '',
+      urlEst: '',
+      fundamentoEst: '',
+
+      tieneGeo: 'No',
+      ordenamientoGeo: '',
+      otroOrdenamientoGeo: '',
+      nombreOrdenamientoGeo: '',
+      fechaGeo: '',
+      urlGeo: '',
+      fundamentoGeo: '',
+
+      tieneRA: 'No',
+      ordenamientoRA: '',
+      otroOrdenamientoRA: '',
+      nombreOrdenamientoRA: '',
+      fechaRA: '',
+      urlRA: '',
+      fundamentoRA: '',
+
+      participaCeieg: 'No',
+      participaRen: 'No',
+      participaRnig: 'No',
+      notas: ''
+    },
+
+    abrirModal() {
+      this.nuevaUnidad = {
+        nombre: '',
+        nivel: '',
+        tieneEst: 'No',
+        ordenamientoEst: '',
+        otroOrdenamientoEst: '',
+        nombreOrdenamientoEst: '',
+        fechaEst: '',
+        urlEst: '',
+        fundamentoEst: '',
+
+        tieneGeo: 'No',
+        ordenamientoGeo: '',
+        otroOrdenamientoGeo: '',
+        nombreOrdenamientoGeo: '',
+        fechaGeo: '',
+        urlGeo: '',
+        fundamentoGeo: '',
+
+        tieneRA: 'No',
+        ordenamientoRA: '',
+        otroOrdenamientoRA: '',
+        nombreOrdenamientoRA: '',
+        fechaRA: '',
+        urlRA: '',
+        fundamentoRA: '',
+
+        participaCeieg: 'No',
+        participaRen: 'No',
+        participaRnig: 'No',
+        notas: ''
+      };
+      this.modalAbierto = true;
+    },
+
+    guardarUnidad() {
+      if (!this.nuevaUnidad.nombre || !this.nuevaUnidad.nivel) {
+        alert('Por favor ingrese el nombre completo y el nivel jerárquico de la unidad administrativa.');
+        return;
+      }
+      this.unidades.push(JSON.parse(JSON.stringify(this.nuevaUnidad)));
+      this.modalAbierto = false;
+    },
+
+    eliminarUnidad(index) {
+      if (confirm('¿Desea eliminar esta unidad administrativa del registro?')) {
+        this.unidades.splice(index, 1);
+      }
+    }
+  }">
+
+    <!-- ==================== HEADER A PANTALLA COMPLETA ==================== -->
+    <header class="w-full bg-[#0098da]">
+        <div class="w-full">
+            <img src="./img/banner_rue.svg"
+                alt="Registro Nacional de Unidades de Estado 2026 - RUE 2026 | CEIEG Chiapas"
+                class="w-full h-auto block object-cover" />
+        </div>
+    </header>
+
+    <!-- ==================== CONTENEDOR PRINCIPAL ==================== -->
+    <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12 flex-1 w-full space-y-10">
+
+        <!-- TARJETA INFORMATIVA: OBJETIVO Y CRITERIOS -->
+        <div class="bg-white p-6 sm:p-8 border border-chiapas-arena/60 border-t-4 border-t-chiapas-rojo shadow-sm">
+            <div class="flex items-center gap-3 mb-4">
+                <div
+                    class="w-10 h-10 bg-chiapas-rojo/10 text-chiapas-rojo flex items-center justify-center text-lg border border-chiapas-rojo/20">
+                    <i class="fa-solid fa-file-signature"></i>
+                </div>
+                <div>
+                    <h2 class="text-xl sm:text-2xl font-bold text-chiapas-negro">
+                        Listado de Instituciones e identificación de Unidades del Estado (UE) - Chiapas 2026
+                    </h2>
+                    <p class="text-xs text-neutral-500 font-semibold tracking-wide uppercase">
+                        Registros Nacionales de Información Estadística y Geográfica (SNIEG - INEGI - CEIEG)
+                    </p>
+                </div>
+            </div>
+
+            <p class="text-neutral-700 text-sm sm:text-base leading-relaxed text-justify mb-4">
+                <strong>Objetivo:</strong> Validar, actualizar y complementar el listado de instituciones públicas del
+                Estado de Chiapas, así como identificar las Unidades o Áreas Administrativas (UE) que cuentan con
+                atribuciones para desarrollar actividades estadísticas o geográficas, o generar registros
+                administrativos (RA).
+            </p>
+
+            <div
+                class="bg-chiapas-arena/20 border-l-4 border-chiapas-rojo p-4 text-xs sm:text-sm text-neutral-800 leading-relaxed text-justify">
+                <strong class="font-bold text-chiapas-negro">Criterio de registro:</strong> En caso de que una
+                institución tenga más de una unidad o área administrativa con atribuciones, agréguelas una por una
+                mediante el botón de registro de unidad. Si varios niveles de la estructura orgánica cuentan
+                con las atribuciones, se deberá considerar la unidad o área administrativa de mayor nivel jerárquico,
+                excluyendo el primero (persona titular del ente). Todas las preguntas deben ser respondidas (en
+                caso de no aplicar, especifíquelo textualmente).
+            </div>
+        </div>
+
+        <!-- ==================== FORMULARIO BLADE / LARAVEL ==================== -->
+        <form method="POST" action="{{ route('rue.guardar') }}" class="space-y-8">
+            @csrf
+
+            <!-- Almacén en formato JSON para que Lalo procese todas las unidades y sus participaciones en la BD -->
+            <input type="hidden" name="unidades_json" :value="JSON.stringify(unidades)">
+
+            <!-- SECCIÓN 1: IDENTIFICACIÓN Y DATOS GENERALES DE LA INSTITUCIÓN (PREGUNTAS 1 A 9) -->
+            <section class="bg-white p-6 sm:p-8 border border-chiapas-arena/60 shadow-sm space-y-6">
+                <div class="flex items-center gap-3 pb-3 border-b border-chiapas-arena/50">
+                    <div
+                        class="w-8 h-8 bg-chiapas-rojo/10 text-chiapas-rojo flex items-center justify-center text-sm font-bold border border-chiapas-rojo/20">
+                        1</div>
+                    <div>
+                        <h3 class="text-lg font-bold text-chiapas-negro uppercase tracking-wider">
+                            Datos Generales de la Institución Pública
+                        </h3>
+                        <p class="text-xs text-neutral-500">
+                            Complete las características jurídicas, datos de contacto e indique si cuenta con Unidades
+                            del Estado (UE).
+                        </p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+
+                    <!-- 1. MUNICIPIO -->
+                    <div>
+                        <label for="municipio" class="block text-sm font-bold text-chiapas-negro mb-1">
+                            1. MUNICIPIO <span class="text-chiapas-rojo">*</span>
+                        </label>
+                        <p class="text-xs text-neutral-600 mb-2">
+                            Seleccionar el municipio en el que se encuentra ubicada la institución.
+                        </p>
+                        <select id="municipio" name="municipio" x-model="municipioSeleccionado" required
+                            class="w-full p-3 bg-white border border-chiapas-arena text-sm focus:outline-none focus:border-chiapas-rojo focus:ring-1 focus:ring-chiapas-rojo">
+                            <option value="">-- Seleccionar Municipio --</option>
+                            <option value="Chiapa de Corzo">Chiapa de Corzo</option>
+                            <option value="Cintalapa de Figueroa">Cintalapa de Figueroa</option>
+                            <option value="Ocosingo">Ocosingo</option>
+                            <option value="San Cristóbal de las Casas">San Cristóbal de las Casas</option>
+                            <option value="Tapachula">Tapachula</option>
+                            <option value="Tonalá">Tonalá</option>
+                            <option value="Tuxtla Gutiérrez">Tuxtla Gutiérrez</option>
+                            
+                        </select>
+
+                        
+                    </div>
+
+                    <!-- 2. INSTITUCIÓN PÚBLICA -->
+                    <div>
+                        <label for="institucion" class="block text-sm font-bold text-chiapas-negro mb-1">
+                            2. INSTITUCIÓN PÚBLICA <span class="text-chiapas-rojo">*</span>
+                        </label>
+                        <p class="text-xs text-neutral-600 mb-2 leading-relaxed text-justify">
+                            Validar que se trate del nombre completo y oficial de la institución. En caso de corregir
+                            ("Actualizada") o agregar ("Agregada"), elija "Otro:" y escriba el nombre oficial.
+                        </p>
+                        <select id="institucion" name="institucion" x-model="institucionSeleccionada" required
+                            class="w-full p-3 bg-white border border-chiapas-arena text-sm focus:outline-none focus:border-chiapas-rojo focus:ring-1 focus:ring-chiapas-rojo">
+                            <option value="">-- Seleccionar Institución del Listado --</option>
+                            <option value="Aerobalam, S.A. de C.V.">Aerobalam, S.A. de C.V.</option>
+                            <option value="Agencia Digital Tecnológica del Estado">Agencia Digital Tecnológica del
+                                Estado</option>
+                            <option value="Archivo General del Estado">Archivo General del Estado</option>
+                            <option value="Auditoría Superior del Estado de Chiapas">Auditoría Superior del Estado de
+                                Chiapas</option>
+                            <option value="Centro de Conciliación Laboral del Estado de Chiapas">Centro de Conciliación
+                                Laboral del Estado de Chiapas</option>
+                            <option value="Centro Estatal de Control de Confianza Certificado del Estado de Chiapas">
+                                Centro Estatal de Control de Confianza Certificado del Estado de Chiapas</option>
+                            <option
+                                value="Centro Estatal de Prevención Social de la Violencia y Participación Ciudadana">
+                                Centro Estatal de Prevención Social de la Violencia y Participación Ciudadana</option>
+                            
+                            <option value="Centro Estatal de Trasplantes del Estado de Chiapas">Centro Estatal de
+                                Trasplantes del Estado de Chiapas</option>
+                            <option value="Colegio de Bachilleres de Chiapas">Colegio de Bachilleres de Chiapas</option>
+                            
+                            <option
+                                value="Colegio de Educación Profesional Técnica del Estado de Chiapas (CONALEP CHIAPAS)">
+                                Colegio de Educación Profesional Técnica del Estado de Chiapas (CONALEP CHIAPAS)
+                            </option>
+                            <option value="Colegio de Estudios Científicos y Tecnológicos del Estado de Chiapas">Colegio
+                                de Estudios Científicos y Tecnológicos del Estado de Chiapas</option>
+                            <option value="Comisión Ejecutiva Estatal de Atención a Víctimas para el Estado de Chiapas">
+                                Comisión Ejecutiva Estatal de Atención a Víctimas para el Estado de Chiapas</option>
+                            
+                            <option value="Comisión Estatal de Búsqueda de Personas">Comisión Estatal de Búsqueda de
+                                Personas</option>
+                            <option value="Comisión Estatal de Caminos">Comisión Estatal de Caminos</option>
+                            <option value="Comisión Estatal de Conciliación y Arbitraje Médico de Chiapas">Comisión
+                                Estatal de Conciliación y Arbitraje Médico de Chiapas</option>
+                            <option value="Comisión Estatal de los Derechos Humanos">Comisión Estatal de los Derechos
+                                Humanos</option>
+                            <option value="Comisión Estatal de Mejora Regulatoria">Comisión Estatal de Mejora
+                                Regulatoria</option>
+                            <option value="Comisión Estatal de Simplificación Administrativa">Comisión Estatal de
+                                Simplificación Administrativa</option>
+                            <option value="Comisión Estatal del Agua y Saneamiento de Chiapas">Comisión Estatal del Agua
+                                y Saneamiento de Chiapas</option>
+                            <option value="Consejo de la Judicatura">Consejo de la Judicatura</option>
+                            <option value="Consejo Estatal para las Culturas y las Artes de Chiapas">Consejo Estatal
+                                para las Culturas y las Artes de Chiapas</option>
+                            <option
+                                value="Coordinación Estatal para el Mejoramiento del Zoológico Miguel Álvarez del Toro">
+                                Coordinación Estatal para el Mejoramiento del Zoológico Miguel Álvarez del Toro</option>
+                            
+                            <option value="Fiscalía General del Estado de Chiapas">Fiscalía General del Estado de
+                                Chiapas</option>
+                            <option value="Honorable Congreso del Estado">Honorable Congreso del Estado</option>
+                            <option value="Instituto Casa de las Artesanías de Chiapas">Instituto Casa de las Artesanías
+                                de Chiapas</option>
+                            <option value="Instituto Chiapaneco de Educación para Jóvenes y Adultos">Instituto
+                                Chiapaneco de Educación para Jóvenes y Adultos</option>
+                            <option value="Instituto de Bomberos del Estado de Chiapas">Instituto de Bomberos del Estado
+                                de Chiapas</option>
+                            <option value="Instituto de Capacitación y Vinculación Tecnológica del Estado de Chiapas">
+                                Instituto de Capacitación y Vinculación Tecnológica del Estado de Chiapas</option>
+                            <option
+                                value="Instituto de Comunicación Social y Relaciones Públicas del Estado de Chiapas">
+                                Instituto de Comunicación Social y Relaciones Públicas del Estado de Chiapas</option>
+                            
+                            <option value="Instituto de Elecciones y Participación Ciudadana del estado de Chiapas">
+                                Instituto de Elecciones y Participación Ciudadana del estado de Chiapas</option>
+
+                            <option value="Instituto de Evaluación, Profesionalización y Promoción Docente de Chiapas">
+                                Instituto de Evaluación, Profesionalización y Promoción Docente de Chiapas</option>
+                            
+                            <option value="Instituto de Formación Policial">Instituto de Formación Policial</option>
+                            
+                            <option value="Instituto de la Consejería Jurídica del Gobierno del Estado">Instituto de la
+                                Consejería Jurídica del Gobierno del Estado</option>
+                            <option value="Instituto de la Infraestructura Física Educativa del Estado de Chiapas">
+                                Instituto de la Infraestructura Física Educativa del Estado de Chiapas</option>
+                            <option value="Instituto de la Juventud del Estado de Chiapas">Instituto de la Juventud del
+                                Estado de Chiapas</option>
+                            <option
+                                value="Instituto de Protección Social y Beneficiencia Pública del Estado de Chiapas">
+                                Instituto de Protección Social y Beneficiencia Pública del Estado de Chiapas</option>
+                            
+                            <option value="Instituto de Salud">Instituto de Salud</option>
+                            <option value="Instituto de Seguridad Social de los Trabajadores del Estado de Chiapas">
+                                Instituto de Seguridad Social de los Trabajadores del Estado de Chiapas</option>
+                                
+                            <option value="Instituto del Café de Chiapas">Instituto del Café de Chiapas</option>
+                            
+                            <option value="Instituto del Deporte del Estado de Chiapas">Instituto del Deporte del Estado
+                                de Chiapas</option>
+                            <option value="Instituto del Patrimonio del Estado">Instituto del Patrimonio del Estado
+                            </option>
+                            <option value="Instituto Estatal del Agua">Instituto Estatal del Agua</option>
+                            <option
+                                value="Instituto para la Gestión Integral de Riesgos de Desastres del Estado de Chiapas">
+                                Instituto para la Gestión Integral de Riesgos de Desastres del Estado de Chiapas
+                            </option>
+                            <option value="Instituto Registral del Estado de Chiapas">Instituto Registral del Estado de
+                                Chiapas</option>
+                            <option value="Instituto Tecnológico Superior de Cintalapa">Instituto Tecnológico Superior
+                                de Cintalapa</option>
+                            <option value="Junta Local de Conciliación y Arbitraje del Estado de Chiapas">Junta Local de
+                                Conciliación y Arbitraje del Estado de Chiapas</option>
+                            <option value="Oficialía Mayor del Estado de Chiapas">Oficialía Mayor del Estado de Chiapas
+                            </option>
+                            <option value="Oficina de Convenciones y Visitantes">Oficina de Convenciones y Visitantes
+                            </option>
+                            <option value="Oficina del Gobernador">Oficina del Gobernador</option>
+                            <option value="Procuraduría Ambiental del Estado de Chiapas">Procuraduría Ambiental del
+                                Estado de Chiapas</option>
+                            <option value="Promotora de Vivienda Chiapas">Promotora de Vivienda Chiapas</option>
+                            
+                            <option value="Secretaría Anticorrupción y Buen Gobierno">Secretaría Anticorrupción y Buen
+                                Gobierno</option>
+                            <option value="Secretaría de Economía y del Trabajo">Secretaría de Economía y del Trabajo
+                            </option>
+                            <option value="Secretaría de Educación">Secretaría de Educación</option>
+                            <option value="Secretaría de Finanzas">Secretaría de Finanzas</option>
+                            <option value="Secretaría de Infraestructura">Secretaría de Infraestructura</option>
+                            
+                            <option value="Secretaría de la Frontera Sur">Secretaría de la Frontera Sur</option>
+                            
+                            <option value="Secretaría de la Mujer e Igualdad de Género">Secretaría de la Mujer e
+                                Igualdad de Género</option>
+                            <option value="Secretaría de los Pueblos Indígenas y Afromexicanos">Secretaría de los
+                                Pueblos Indígenas y Afromexicanos</option>
+                            <option value="Secretaría de Medio Ambiente e Historia Natural">Secretaría de Medio Ambiente
+                                e Historia Natural</option>
+                            <option value="Secretaría de Movilidad y Transporte">Secretaría de Movilidad y Transporte
+                            </option>
+                            <option value="Secretaría de Pesca y Acuacultura del Pueblo">Secretaría de Pesca y
+                                Acuacultura del Pueblo</option>
+                            <option value="Secretaría de Protección Civil">Secretaría de Protección Civil</option>
+                            
+                            <option value="Secretaría de Salud">Secretaría de Salud</option>
+                            <option value="Secretaría de Seguridad del Pueblo">Secretaría de Seguridad del Pueblo
+                            </option>
+                            <option value="Secretaría de Turismo">Secretaría de Turismo</option>
+                            <option value="Secretaría del Campo">Secretaría del Campo</option>
+                            <option value="Secretaría del Humanismo">Secretaría del Humanismo</option>
+                            <option value="Secretaría Ejecutiva del Sistema Anticorrupción del Estado de Chiapas">
+                                Secretaría Ejecutiva del Sistema Anticorrupción del Estado de Chiapas</option>
+                            <option value="Secretaría General de Gobierno y Mediación">Secretaría General de Gobierno y
+                                Mediación</option>
+                            <option value="Secretariado Ejecutivo del Sistema Estatal de Seguridad Pública">Secretariado
+                                Ejecutivo del Sistema Estatal de Seguridad Pública</option>
+                            <option value="Sistema Chiapaneco de Radio, Televisión y Cinematografía">Sistema Chiapaneco
+                                de Radio, Televisión y Cinematografía</option>
+                            <option
+                                value="Sistema para el Desarrollo Integral de la Familia del Estado de Chiapas (SISTEMA DIF CHIAPAS)">
+                                Sistema para el Desarrollo Integral de la Familia del Estado de Chiapas (SISTEMA DIF
+                                CHIAPAS)</option>
+                            <option value="Sociedad Operadora de la Torre Chiapas, S.A. de C.V.">Sociedad Operadora de
+                                la Torre Chiapas, S.A. de C.V.</option>
+                            <option
+                                value="Sociedad Operadora del Aeropuerto Internacional Ángel Albino Corzo, S.A. de C.V.">
+                                Sociedad Operadora del Aeropuerto Internacional Ángel Albino Corzo, S.A. de C.V.
+                            </option>
+                            <option value="Talleres Gráficos de Chiapas">Talleres Gráficos de Chiapas</option>
+                            <option value="Transparencia para el Pueblo de Chiapas">Transparencia para el Pueblo de
+                                Chiapas</option>
+                            <option value="Tribunal Administrativo del Poder Judicial del estado de Chiapas">Tribunal
+                                Administrativo del Poder Judicial del estado de Chiapas</option>
+                            <option value="Tribunal de Superior de Justicia">Tribunal de Superior de Justicia</option>
+                            
+                            <option value="Tribunal Electoral del Estado de Chiapas">Tribunal Electoral del Estado de
+                                Chiapas</option>
+                            <option value="Universidad Autónoma de Chiapas">Universidad Autónoma de Chiapas</option>
+                            
+                            <option value="Universidad de Ciencias y Artes de Chiapas">Universidad de Ciencias y Artes
+                                de Chiapas</option>
+                            <option value="Universidad de Seguridad Pública del Sureste">Universidad de Seguridad
+                                Pública del Sureste</option>
+                            <option value="Universidad Intercultural de Chiapas">Universidad Intercultural de Chiapas
+                            </option>
+                            <option value="Universidad Politécnica de Chiapas">Universidad Politécnica de Chiapas
+                            </option>
+                            <option value="Universidad Politécnica de Tapachula">Universidad Politécnica de Tapachula
+                            </option>
+                            <option value="Universidad Tecnológica de la Selva">Universidad Tecnológica de la Selva
+                            </option>
+                            <option value="OTRO">Otro:</option>
+                        </select>
+
+                        <div x-show="institucionSeleccionada === 'OTRO'" x-cloak
+                            class="mt-3 bg-[#fbfaf8] border border-chiapas-arena p-3.5 space-y-1.5">
+                            <label for="otra_institucion"
+                                class="block text-xs font-bold text-chiapas-rojo uppercase tracking-wider">
+                                Escriba el nombre completo y oficial de la institución:
+                            </label>
+                            <input type="text" id="otra_institucion" name="otra_institucion" x-model="otraInstitucion"
+                                :required="institucionSeleccionada === 'OTRO'"
+                                placeholder="Nombre completo y oficial..."
+                                class="w-full p-2.5 bg-white border border-chiapas-arena text-sm focus:outline-none focus:border-chiapas-rojo focus:ring-1 focus:ring-chiapas-rojo">
+                        </div>
+                    </div>
+
+                    <!-- 3. VALIDACIÓN INSTITUCIÓN -->
+                    <div class="sm:col-span-2">
+                        <label class="block text-sm font-bold text-chiapas-negro mb-1">
+                            3. VALIDACIÓN INSTITUCIÓN <span class="text-chiapas-rojo">*</span>
+                        </label>
+                        <p class="text-xs text-neutral-600 mb-3 leading-relaxed">
+                            Se refiere a la validación del nombre de la institución:<br>
+                            &bull; <strong>Validada:</strong> Seleccionar cuando el nombre de la institución es correcto
+                            tal como se muestra en el listado.<br>
+                            &bull; <strong>Actualizada:</strong> Seleccionar cuando el nombre de la institución se
+                            corrige.<br>
+                            &bull; <strong>Agregada:</strong> Seleccionar cuando se agrega una institución no
+                            considerada en el listado.<br>
+                            &bull; <strong>No existe:</strong> Seleccionar cuando la institución no exista en la
+                            entidad.
+                        </p>
+
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-sm">
+                            <label
+                                class="flex items-center gap-2 p-3 bg-[#fbfaf8] border border-chiapas-arena/60 cursor-pointer">
+                                <input type="radio" name="validacion_institucion" value="Validada" required checked
+                                    class="text-chiapas-rojo focus:ring-chiapas-rojo">
+                                <span>Validada</span>
+                            </label>
+                            <label
+                                class="flex items-center gap-2 p-3 bg-[#fbfaf8] border border-chiapas-arena/60 cursor-pointer">
+                                <input type="radio" name="validacion_institucion" value="Actualizada" required
+                                    class="text-chiapas-rojo focus:ring-chiapas-rojo">
+                                <span>Actualizada</span>
+                            </label>
+                            <label
+                                class="flex items-center gap-2 p-3 bg-[#fbfaf8] border border-chiapas-arena/60 cursor-pointer">
+                                <input type="radio" name="validacion_institucion" value="Agregada" required
+                                    class="text-chiapas-rojo focus:ring-chiapas-rojo">
+                                <span>Agregada</span>
+                            </label>
+                            <label
+                                class="flex items-center gap-2 p-3 bg-[#fbfaf8] border border-chiapas-arena/60 cursor-pointer">
+                                <input type="radio" name="validacion_institucion" value="No existe" required
+                                    class="text-chiapas-rojo focus:ring-chiapas-rojo">
+                                <span>No existe</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- 4. TIPO DE INSTITUCIÓN -->
+                    <div>
+                        <label for="tipo_institucion" class="block text-sm font-bold text-chiapas-negro mb-1">
+                            4. TIPO DE INSTITUCIÓN <span class="text-chiapas-rojo">*</span>
+                        </label>
+                        <p class="text-xs text-neutral-600 mb-2">
+                            Elegir de qué tipo de institución se trata:
+                        </p>
+                        <select id="tipo_institucion" name="tipo_institucion" required
+                            class="w-full p-3 bg-white border border-chiapas-arena text-sm focus:outline-none focus:border-chiapas-rojo focus:ring-1 focus:ring-chiapas-rojo">
+                            <option value="">-- Seleccionar Poder / Ámbito --</option>
+                            <option value="Poder_ejecutivo">Poder Ejecutivo</option>
+                            <option value="Poder_legislativo">Poder Legislativo</option>
+                            <option value="Poder_judicial">Poder Judicial</option>
+                            <option value="Autónomo">Autónomo</option>
+                        </select>
+                    </div>
+
+                    <!-- 5. NATURALEZA JURÍDICA -->
+                    <div>
+                        <label for="naturaleza_juridica" class="block text-sm font-bold text-chiapas-negro mb-1">
+                            5. NATURALEZA JURÍDICA <span class="text-chiapas-rojo">*</span>
+                        </label>
+                        <p class="text-xs text-neutral-600 mb-2">
+                            Seleccionar la que corresponda a la institución, conforme su marco legal.
+                        </p>
+                        <select id="naturaleza_juridica" name="naturaleza_juridica" x-model="naturalezaJuridica"
+                            required
+                            class="w-full p-3 bg-white border border-chiapas-arena text-sm focus:outline-none focus:border-chiapas-rojo focus:ring-1 focus:ring-chiapas-rojo">
+                            <option value="">-- Seleccionar Naturaleza Jurídica --</option>
+                            <option value="Oficina del Ejecutivo">Oficina del Ejecutivo</option>
+                            <option value="Secretaría u homóloga">Secretaría u homóloga</option>
+                            <option value="Órgano administrativo desconcentrado">Órgano administrativo desconcentrado
+                            </option>
+                            <option value="Consejería Jurídica del Ejecutivo u homóloga">Consejería Jurídica del
+                                Ejecutivo u homóloga</option>
+                            <option value="Organismo descentralizado sectorizado">Organismo descentralizado sectorizado
+                            </option>
+                            <option value="Organismo descentralizado no sectorizado">Organismo descentralizado no
+                                sectorizado</option>
+                            <option value="Organismo descentralizado considerado centro público de investigación">
+                                Organismo descentralizado considerado centro público de investigación</option>
+                            <option value="Empresa de participación estatal mayoritaria sectorizada">Empresa de
+                                participación estatal mayoritaria sectorizada</option>
+                            <option value="Empresa de participación estatal mayoritaria no sectorizada">Empresa de
+                                participación estatal mayoritaria no sectorizada</option>
+                            <option
+                                value="Empresa de participación estatal mayoritaria considerada centro público de investigación">
+                                Empresa de participación estatal mayoritaria considerada centro público de investigación
+                            </option>
+                            <option value="Fideicomiso público">Fideicomiso público</option>
+                            <option value="Fideicomiso público considerado centro público de investigación">Fideicomiso
+                                público considerado centro público de investigación</option>
+                            <option value="Cámara de Diputados">Cámara de Diputados</option>
+                            <option value="Órgano de auditoría y fiscalización">Órgano de auditoría y fiscalización
+                            </option>
+                            <option value="Órgano del Poder Judicial">Órgano del Poder Judicial</option>
+                            <option value="Órgano constitucional autónomo">Órgano constitucional autónomo</option>
+                            
+                            <option value="Órgano jurisdiccional autónomo">Órgano jurisdiccional autónomo</option>
+                            
+                            <option value="Organismo descentralizado con autonomía">Organismo descentralizado con
+                                autonomía</option>
+                            <option value="OTRO">Otro:</option>
+                        </select>
+
+                        <div x-show="naturalezaJuridica === 'OTRO'" x-cloak
+                            class="mt-3 bg-[#fbfaf8] border border-chiapas-arena p-3.5 space-y-1.5">
+                            <label for="otra_naturaleza"
+                                class="block text-xs font-bold text-chiapas-rojo uppercase tracking-wider">
+                                Especifique la naturaleza jurídica:
+                            </label>
+                            <input type="text" id="otra_naturaleza" name="otra_naturaleza" x-model="otraNaturaleza"
+                                :required="naturalezaJuridica === 'OTRO'"
+                                placeholder="Escriba la naturaleza jurídica conforme a su decreto..."
+                                class="w-full p-2.5 bg-white border border-chiapas-arena text-sm focus:outline-none focus:border-chiapas-rojo focus:ring-1 focus:ring-chiapas-rojo">
+                        </div>
+                    </div>
+
+                    <!-- 6. SECTORIZADA A / DESCONCENTRADA DE: -->
+                    <div class="sm:col-span-2">
+                        <label for="sectorizada_a" class="block text-sm font-bold text-chiapas-negro mb-1">
+                            6. SECTORIZADA A / DESCONCENTRADA DE:
+                        </label>
+                        <p class="text-xs text-neutral-600 mb-2">
+                            Únicamente si aplica, indicar la dependencia a la que la institución está sectorizada o
+                            desconcentrada.
+                        </p>
+                        <input type="text" id="sectorizada_a" name="sectorizada_a"
+                            placeholder="Ej. Secretaría de Finanzas, Secretaría de Salud (o declarar 'No aplica')..."
+                            class="w-full p-3 bg-white border border-chiapas-arena text-sm focus:outline-none focus:border-chiapas-rojo focus:ring-1 focus:ring-chiapas-rojo">
+                    </div>
+
+                    <!-- 7. PÁGINA WEB INSTITUCIONAL -->
+                    <div>
+                        <label for="pagina_web" class="block text-sm font-bold text-chiapas-negro mb-1">
+                            7. PÁGINA WEB INSTITUCIONAL <span class="text-chiapas-rojo">*</span>
+                        </label>
+                        <p class="text-xs text-neutral-600 mb-2">
+                            Proporcionar la URL de la página web oficial de la institución.
+                        </p>
+                        <input type="text" id="pagina_web" name="pagina_web" required
+                            placeholder="https://www.chiapas.gob.mx/... (o 'No aplica')"
+                            class="w-full p-3 bg-white border border-chiapas-arena text-sm focus:outline-none focus:border-chiapas-rojo focus:ring-1 focus:ring-chiapas-rojo">
+                    </div>
+
+                    <!-- 8. CORREO ELECTRÓNICO INSTITUCIONAL -->
+                    <div>
+                        <label for="correo_institucional" class="block text-sm font-bold text-chiapas-negro mb-1">
+                            8. CORREO ELECTRÓNICO INSTITUCIONAL <span class="text-chiapas-rojo">*</span>
+                        </label>
+                        <p class="text-xs text-neutral-600 mb-2">
+                            Proporcionar el correo electrónico de atención a usuarios, general de la institución.
+                        </p>
+                        <input type="text" id="correo_institucional" name="correo_institucional" required
+                            placeholder="contacto@dependencia.chiapas.gob.mx"
+                            class="w-full p-3 bg-white border border-chiapas-arena text-sm focus:outline-none focus:border-chiapas-rojo focus:ring-1 focus:ring-chiapas-rojo">
+                    </div>
+
+                    <!-- 9. UNIDADES DE ESTADO (UE) -->
+                    <div class="sm:col-span-2 bg-[#fbfaf8] border border-chiapas-arena p-4">
+                        <label class="block text-sm font-bold text-chiapas-negro mb-1">
+                            9. UNIDADES DE ESTADO (UE) <span class="text-chiapas-rojo">*</span>
+                        </label>
+                        <p class="text-xs text-neutral-600 mb-3">
+                            Indicar si la institución cuenta con alguna unidad o área administrativa con las
+                            atribuciones necesarias para considerarse como tal.
+                        </p>
+                        <div class="flex gap-6 text-sm font-semibold">
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="radio" name="cuenta_con_ue" value="Sí" x-model="cuentaConUE"
+                                    class="text-chiapas-rojo focus:ring-chiapas-rojo">
+                                <span>Sí</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="radio" name="cuenta_con_ue" value="No" x-model="cuentaConUE"
+                                    class="text-chiapas-rojo focus:ring-chiapas-rojo">
+                                <span>No</span>
+                            </label>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- PASO 2: LISTADO DE UNIDADES ADMINISTRATIVAS Y ACCESO AL MODAL -->
+            <section class="bg-white p-6 sm:p-8 border border-chiapas-arena/60 shadow-sm space-y-6">
+                <div
+                    class="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-chiapas-arena/50 gap-4">
+                    <div class="flex items-center gap-3">
+                        <div
+                            class="w-8 h-8 bg-chiapas-verde/15 text-chiapas-verde flex items-center justify-center text-sm font-bold">
+                            2</div>
+                        <div>
+                            <h3 class="text-lg font-bold text-chiapas-negro uppercase tracking-wider">
+                                Unidades o Áreas Administrativas con Atribuciones
+                            </h3>
+                            <p class="text-xs text-neutral-500">
+                                Registre cada área facultada (con sus atribuciones y participación en comités).
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- BOTÓN PARA AGREGAR UNIDAD -->
+                    <button type="button" @click="abrirModal()"
+                        class="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-chiapas-verde hover:bg-[#007d6d] text-white font-bold text-xs uppercase tracking-wider shadow-sm transition-all cursor-pointer">
+                        <i class="fa-solid fa-plus"></i>
+                        <span>Agregar Unidad Administrativa</span>
+                    </button>
+                </div>
+
+                <!-- LISTA DE UNIDADES REGISTRADAS -->
+                <div class="space-y-4">
+                    <template x-if="unidades.length === 0">
+                        <div
+                            class="text-center py-10 bg-[#fbfaf8] border-2 border-dashed border-chiapas-arena/80 p-6 space-y-2">
+                            <i class="fa-solid fa-sitemap text-3xl text-neutral-400"></i>
+                            <p class="text-sm font-bold text-chiapas-negro">Aún no se han agregado Unidades
+                                Administrativas.</p>
+                            <p class="text-xs text-neutral-500">Haga clic en el botón superior para capturar cada unidad
+                                o área administrativa de su institución.</p>
+                        </div>
+                    </template>
+
+                    <!-- TARJETA RESUMEN DE CADA UNIDAD -->
+                    <template x-for="(u, index) in unidades" :key="index">
+                        <div
+                            class="p-5 bg-[#fbfaf8] border border-chiapas-arena/80 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-l-4 border-l-chiapas-verde">
+                            <div class="space-y-1.5">
+                                <div class="flex items-center gap-2">
+                                    <span
+                                        class="text-xs font-bold px-2 py-0.5 bg-chiapas-verde/20 text-chiapas-verde uppercase tracking-wider"
+                                        x-text="'Unidad #' + (index + 1)"></span>
+                                    <span class="text-xs text-neutral-500" x-text="'Nivel: ' + u.nivel"></span>
+                                </div>
+                                <h4 class="text-base font-bold text-chiapas-negro" x-text="u.nombre"></h4>
+                                <div class="flex flex-wrap gap-2 pt-1 text-xs">
+                                    <span class="px-2 py-0.5 text-[11px] font-semibold border"
+                                        :class="u.tieneEst === 'Sí' ? 'bg-chiapas-rojo/10 text-chiapas-rojo border-chiapas-rojo/30' : 'bg-neutral-100 text-neutral-400 border-neutral-200'"
+                                        x-text="'Estadística: ' + u.tieneEst"></span>
+                                    <span class="px-2 py-0.5 text-[11px] font-semibold border"
+                                        :class="u.tieneGeo === 'Si' ? 'bg-chiapas-verde/10 text-chiapas-verde border-chiapas-verde/30' : 'bg-neutral-100 text-neutral-400 border-neutral-200'"
+                                        x-text="'Geográfica: ' + (u.tieneGeo === 'Si' ? 'Sí' : 'No')"></span>
+                                    <span class="px-2 py-0.5 text-[11px] font-semibold border"
+                                        :class="u.tieneRA === 'Si' ? 'bg-chiapas-magenta/10 text-chiapas-magenta border-chiapas-magenta/30' : 'bg-neutral-100 text-neutral-400 border-neutral-200'"
+                                        x-text="'Registros Adm: ' + (u.tieneRA === 'Si' ? 'Sí' : 'No')"></span>
+                                    <span
+                                        class="px-2 py-0.5 text-[11px] font-semibold border bg-neutral-100 text-neutral-700 border-neutral-300"
+                                        x-text="'CEIEG: ' + u.participaCeieg"></span>
+                                </div>
+                            </div>
+
+                            <!-- BOTÓN ELIMINAR -->
+                            <button type="button" @click="eliminarUnidad(index)"
+                                class="text-xs text-chiapas-rojo hover:text-[#8a1222] font-bold inline-flex items-center gap-1.5 p-2 bg-white border border-chiapas-rojo/30 hover:border-chiapas-rojo transition-colors cursor-pointer">
+                                <i class="fa-solid fa-trash-can"></i>
+                                <span>Eliminar</span>
+                            </button>
+                        </div>
+                    </template>
+                </div>
+            </section>
+
+            <!-- BOTONES DE ENVÍO -->
+            <div
+                class="bg-white p-6 border border-chiapas-arena/60 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="text-xs text-neutral-600 leading-relaxed text-center sm:text-left">
+                    <i class="fa-solid fa-circle-check text-chiapas-verde mr-1"></i>
+                    Al registrar la cédula, la institución y todas sus unidades quedarán formalmente asentadas en el
+                    sistema RUE 2026.
+                </div>
+
+                <div class="flex items-center gap-4 w-full sm:w-auto">
+                    <button type="submit"
+                        class="w-full sm:w-auto px-8 py-3.5 bg-chiapas-rojo hover:bg-[#8a1222] text-white font-bold text-sm uppercase tracking-wider shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-3 cursor-pointer">
+                        <i class="fa-solid fa-paper-plane text-chiapas-arena"></i>
+                        <span>Registrar Cédula RUE 2026</span>
+                    </button>
+                </div>
+            </div>
+
+        </form>
+
+        <!-- ==================== MODAL: FORMULARIO INTEGRAL DE LA UNIDAD ADMINISTRATIVA ==================== -->
+        <div x-show="modalAbierto" x-cloak
+            class="fixed inset-0 z-50 overflow-y-auto bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+
+            <div class="bg-white w-full max-w-4xl max-h-[92vh] overflow-y-auto border border-chiapas-arena/60 shadow-2xl space-y-6 p-6 sm:p-8"
+                @click.outside="modalAbierto = false">
+
+                <!-- CABECERA DEL MODAL -->
+                <div class="flex items-center justify-between pb-4 border-b border-chiapas-arena/60">
+                    <div class="flex items-center gap-3">
+                        <div
+                            class="w-8 h-8 bg-chiapas-verde/15 text-chiapas-verde flex items-center justify-center text-sm font-bold">
+                            <i class="fa-solid fa-sitemap"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-chiapas-negro uppercase tracking-wider">
+                                Captura de Unidad o Área Administrativa
+                            </h3>
+                            <p class="text-xs text-neutral-500">Deberán responderse todos los campos de forma
+                                obligatoria.</p>
+                        </div>
+                    </div>
+
+                    <button type="button" @click="modalAbierto = false"
+                        class="text-neutral-400 hover:text-chiapas-negro text-xl p-1 cursor-pointer">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+
+                <!-- FORMULARIO INTEGRAL DEL MODAL (SIN SALTOS CONDICIONALES) -->
+                <div class="space-y-6">
+
+                    <!-- 10 Y 11: IDENTIFICACIÓN BÁSICA DE LA UNIDAD -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 bg-[#fbfaf8] border border-chiapas-arena/60 p-4">
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wider text-chiapas-negro mb-1">
+                                10. UNIDAD O ÁREA ADMINISTRATIVA <span class="text-chiapas-rojo">*</span>
+                            </label>
+                            <p class="text-[11px] text-neutral-500 mb-1.5">
+                                Indicar el nombre completo de la unidad o área que cuenta con las atribuciones, tal como
+                                aparece en el ordenamiento interno.
+                            </p>
+                            <input type="text" x-model="nuevaUnidad.nombre" required
+                                placeholder="Ej. Dirección de Epidemiología"
+                                class="w-full p-2.5 bg-white border border-chiapas-arena text-sm focus:outline-none focus:border-chiapas-rojo">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wider text-chiapas-negro mb-1">
+                                11. NIVEL JERÁRQUICO <span class="text-chiapas-rojo">*</span>
+                            </label>
+                            <p class="text-[11px] text-neutral-500 mb-1.5">
+                                Indicar el nivel que ocupa la unidad o área (el primer nivel corresponde a la persona
+                                titular del ente).
+                            </p>
+                            <input type="text" x-model="nuevaUnidad.nivel" required
+                                placeholder="Ej. Dirección de Área, Subsecretaría..."
+                                class="w-full p-2.5 bg-white border border-chiapas-arena text-sm focus:outline-none focus:border-chiapas-rojo">
+                        </div>
+                    </div>
+
+                    <!-- DETALLE DE ATRIBUCIONES ESTADÍSTICAS (12 AL 17 - SIEMPRE VISIBLE) -->
+                    <div class="border border-chiapas-arena/60 border-l-4 border-l-chiapas-rojo p-4 sm:p-5 space-y-4">
+                        <div
+                            class="flex items-center justify-between flex-wrap gap-2 pb-2 border-b border-chiapas-arena/40">
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-chart-pie text-chiapas-rojo"></i>
+                                <h4 class="text-sm font-bold text-chiapas-negro uppercase">Detalle de Atribuciones
+                                    Estadísticas</h4>
+                            </div>
+
+                            <!-- 12. ATRIBUCIONES ESTADÍSTICAS -->
+                            <div class="flex items-center gap-3 text-xs font-bold">
+                                <span>12. ATRIBUCIONES ESTADÍSTICAS:</span>
+                                <label class="flex items-center gap-1 cursor-pointer">
+                                    <input type="radio" value="Sí" x-model="nuevaUnidad.tieneEst"
+                                        class="text-chiapas-rojo">
+                                    <span>Sí</span>
+                                </label>
+                                <label class="flex items-center gap-1 cursor-pointer">
+                                    <input type="radio" value="No" x-model="nuevaUnidad.tieneEst"
+                                        class="text-chiapas-rojo">
+                                    <span>No</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Campos Estadísticos siempre desplegados -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
+                            <div class="sm:col-span-2">
+                                <label class="block text-xs font-bold text-chiapas-negro mb-1">
+                                    13. TIPO DE ORDENAMIENTO ATRIBUCIONES ESTADÍSTICAS <span
+                                        class="text-chiapas-rojo">*</span>
+                                </label>
+                                <p class="text-[11px] text-neutral-500 mb-1">Seleccionar el tipo de ordenamiento que
+                                    contiene las atribuciones estadísticas:</p>
+                                <select x-model="nuevaUnidad.ordenamientoEst" required
+                                    class="w-full p-2.5 bg-white border border-chiapas-arena text-xs">
+                                    <option value="">-- Seleccionar Ordenamiento --</option>
+                                    <option value="Reglamento interior">Reglamento interior</option>
+                                    <option value="Estatuto orgánico">Estatuto orgánico</option>
+                                    <option value="Manual de organización general">Manual de organización general
+                                    </option>
+                                    <option value="Manual de organización específico">Manual de organización específico
+                                    </option>
+                                    <option value="Acuerdo">Acuerdo</option>
+                                    <option value="No aplica">No aplica</option>
+                                    <option value="OTRO">Otro:</option>
+                                </select>
+                                <div x-show="nuevaUnidad.ordenamientoEst === 'OTRO'" x-cloak class="mt-2">
+                                    <input type="text" x-model="nuevaUnidad.otroOrdenamientoEst"
+                                        placeholder="Especifique el tipo..."
+                                        class="w-full p-2 bg-white border border-chiapas-arena text-xs">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-bold text-chiapas-negro mb-1">
+                                    14. NOMBRE DEL ORDENAMIENTO <span class="text-chiapas-rojo">*</span>
+                                </label>
+                                <p class="text-[11px] text-neutral-500 mb-1">Proporcionar nombre completo (o 'No
+                                    aplica').</p>
+                                <input type="text" x-model="nuevaUnidad.nombreOrdenamientoEst" required
+                                    placeholder="Nombre completo oficial..."
+                                    class="w-full p-2.5 bg-white border border-chiapas-arena text-xs">
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-bold text-chiapas-negro mb-1">
+                                    15. FECHA ÚLTIMA PUBLICACIÓN <span class="text-chiapas-rojo">*</span>
+                                </label>
+                                <p class="text-[11px] text-neutral-500 mb-1">Fecha de publicación más reciente.
+                                </p>
+                                <input type="text" x-model="nuevaUnidad.fechaEst" required
+                                    placeholder="AAAA-MM-DD o 'No aplica'"
+                                    class="w-full p-2.5 bg-white border border-chiapas-arena text-xs">
+                            </div>
+
+                            <div class="sm:col-span-2">
+                                <label class="block text-xs font-bold text-chiapas-negro mb-1">
+                                    17. URL DEL ORDENAMIENTO <span class="text-chiapas-rojo">*</span>
+                                </label>
+                                <p class="text-[11px] text-neutral-500 mb-1">Liga de consulta del ordenamiento (o 'No
+                                    aplica').</p>
+                                <input type="text" x-model="nuevaUnidad.urlEst" required
+                                    placeholder="https://... o 'No aplica'"
+                                    class="w-full p-2.5 bg-white border border-chiapas-arena text-xs">
+                            </div>
+
+                            <div class="sm:col-span-2">
+                                <label class="block text-xs font-bold text-chiapas-negro mb-1">
+                                    16. FUNDAMENTO ATRIBUCIONES ESTADÍSTICAS <span
+                                        class="text-chiapas-rojo">*</span>
+                                </label>
+                                <p class="text-[11px] text-neutral-500 mb-1">Anotar artículo, fracción y texto (o 'No
+                                    aplica').</p>
+                                <textarea x-model="nuevaUnidad.fundamentoEst" rows="2" required
+                                    placeholder="Artículo X, Fracción Y y transcripción del texto..."
+                                    class="w-full p-2 bg-white border border-chiapas-arena text-xs"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- DETALLE DE ATRIBUCIONES GEOGRÁFICAS (18 AL 23 - SIEMPRE VISIBLE) -->
+                    <div class="border border-chiapas-arena/60 border-l-4 border-l-chiapas-verde p-4 sm:p-5 space-y-4">
+                        <div
+                            class="flex items-center justify-between flex-wrap gap-2 pb-2 border-b border-chiapas-arena/40">
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-map-location-dot text-chiapas-verde"></i>
+                                <h4 class="text-sm font-bold text-chiapas-negro uppercase">Detalle de Atribuciones
+                                    Geográficas</h4>
+                            </div>
+
+                            <!-- 18. ATRIBUCIONES GEOGRÁFICAS -->
+                            <div class="flex items-center gap-3 text-xs font-bold">
+                                <span>18. ATRIBUCIONES GEOGRÁFICAS:</span>
+                                <label class="flex items-center gap-1 cursor-pointer">
+                                    <input type="radio" value="Si" x-model="nuevaUnidad.tieneGeo"
+                                        class="text-chiapas-verde">
+                                    <span>Sí</span>
+                                </label>
+                                <label class="flex items-center gap-1 cursor-pointer">
+                                    <input type="radio" value="No" x-model="nuevaUnidad.tieneGeo"
+                                        class="text-chiapas-verde">
+                                    <span>No</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Campos Geográficos siempre desplegados -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
+                            <div class="sm:col-span-2">
+                                <label class="block text-xs font-bold text-chiapas-negro mb-1">
+                                    19. TIPO DE ORDENAMIENTO ATRIBUCIONES GEOGRÁFICAS <span
+                                        class="text-chiapas-rojo">*</span>
+                                </label>
+                                <p class="text-[11px] text-neutral-500 mb-1">Seleccionar el tipo de ordenamiento que
+                                    contiene las atribuciones geográficas:</p>
+                                <select x-model="nuevaUnidad.ordenamientoGeo" required
+                                    class="w-full p-2.5 bg-white border border-chiapas-arena text-xs">
+                                    <option value="">-- Seleccionar Ordenamiento --</option>
+                                    <option value="Reglamento interior">Reglamento interior</option>
+                                    <option value="Estatuto orgánico">Estatuto orgánico</option>
+                                    <option value="Manual de organización general">Manual de organización general
+                                    </option>
+                                    <option value="Manual de organización específico">Manual de organización específico
+                                    </option>
+                                    <option value="Acuerdo">Acuerdo</option>
+                                    <option value="No aplica">No aplica</option>
+                                    <option value="OTRO">Otro:</option>
+                                </select>
+                                <div x-show="nuevaUnidad.ordenamientoGeo === 'OTRO'" x-cloak class="mt-2">
+                                    <input type="text" x-model="nuevaUnidad.otroOrdenamientoGeo"
+                                        placeholder="Especifique el tipo..."
+                                        class="w-full p-2 bg-white border border-chiapas-arena text-xs">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-bold text-chiapas-negro mb-1">
+                                    20. NOMBRE DEL ORDENAMIENTO <span class="text-chiapas-rojo">*</span>
+                                </label>
+                                <p class="text-[11px] text-neutral-500 mb-1">Indicar nombre completo (o 'No
+                                    aplica').</p>
+                                <input type="text" x-model="nuevaUnidad.nombreOrdenamientoGeo" required
+                                    placeholder="Nombre completo oficial..."
+                                    class="w-full p-2.5 bg-white border border-chiapas-arena text-xs">
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-bold text-chiapas-negro mb-1">
+                                    21. FECHA ÚLTIMA PUBLICACIÓN <span class="text-chiapas-rojo">*</span>
+                                </label>
+                                <p class="text-[11px] text-neutral-500 mb-1">Fecha de publicación más reciente.
+                                </p>
+                                <input type="text" x-model="nuevaUnidad.fechaGeo" required
+                                    placeholder="AAAA-MM-DD o 'No aplica'"
+                                    class="w-full p-2.5 bg-white border border-chiapas-arena text-xs">
+                            </div>
+
+                            <div class="sm:col-span-2">
+                                <label class="block text-xs font-bold text-chiapas-negro mb-1">
+                                    23. URL DEL ORDENAMIENTO <span class="text-chiapas-rojo">*</span>
+                                </label>
+                                <p class="text-[11px] text-neutral-500 mb-1">Liga de consulta del ordenamiento (o 'No
+                                    aplica').</p>
+                                <input type="text" x-model="nuevaUnidad.urlGeo" required
+                                    placeholder="https://... o 'No aplica'"
+                                    class="w-full p-2.5 bg-white border border-chiapas-arena text-xs">
+                            </div>
+
+                            <div class="sm:col-span-2">
+                                <label class="block text-xs font-bold text-chiapas-negro mb-1">
+                                    22. FUNDAMENTO ATRIBUCIONES GEOGRÁFICAS <span
+                                        class="text-chiapas-rojo">*</span>
+                                </label>
+                                <p class="text-[11px] text-neutral-500 mb-1">Indicar artículo, fracción y texto (o 'No
+                                    aplica').</p>
+                                <textarea x-model="nuevaUnidad.fundamentoGeo" rows="2" required
+                                    placeholder="Artículo X, Fracción Y y transcripción del texto..."
+                                    class="w-full p-2 bg-white border border-chiapas-arena text-xs"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- DETALLE DE ATRIBUCIONES PARA GENERAR REGISTROS ADMINISTRATIVOS (24 AL 29 - SIEMPRE VISIBLE) -->
+                    <div
+                        class="border border-chiapas-arena/60 border-l-4 border-l-chiapas-magenta p-4 sm:p-5 space-y-4">
+                        <div
+                            class="flex items-center justify-between flex-wrap gap-2 pb-2 border-b border-chiapas-arena/40">
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-file-lines text-chiapas-magenta"></i>
+                                <h4 class="text-sm font-bold text-chiapas-negro uppercase">Detalle de Atribuciones para
+                                    Generar RA</h4>
+                            </div>
+
+                            <!-- 24. ATRIBUCIONES PARA GENERAR RA -->
+                            <div class="flex items-center gap-3 text-xs font-bold">
+                                <span>24. ATRIBUCIONES PARA GENERAR RA:</span>
+                                <label class="flex items-center gap-1 cursor-pointer">
+                                    <input type="radio" value="Si" x-model="nuevaUnidad.tieneRA"
+                                        class="text-chiapas-magenta">
+                                    <span>Sí</span>
+                                </label>
+                                <label class="flex items-center gap-1 cursor-pointer">
+                                    <input type="radio" value="No" x-model="nuevaUnidad.tieneRA"
+                                        class="text-chiapas-magenta">
+                                    <span>No</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="bg-chiapas-arena/30 border border-chiapas-arena p-3 text-xs text-chiapas-negro">
+                            Se excluyen los registros vinculados a funciones administrativas internas o de operación
+                            cotidiana (como controles de asistencia, retardos del personal o inventario de bienes
+                            muebles/inmuebles propios).
+                        </div>
+
+                        <!-- Campos RA siempre desplegados -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
+                            <div class="sm:col-span-2">
+                                <label class="block text-xs font-bold text-chiapas-negro mb-1">
+                                    25. TIPO DE ORDENAMIENTO ATRIBUCIONES PARA GENERAR RA <span
+                                        class="text-chiapas-rojo">*</span>
+                                </label>
+                                <p class="text-[11px] text-neutral-500 mb-1">Seleccionar el tipo de ordenamiento que
+                                    contiene las atribuciones para generar RA:</p>
+                                <select x-model="nuevaUnidad.ordenamientoRA" required
+                                    class="w-full p-2.5 bg-white border border-chiapas-arena text-xs">
+                                    <option value="">-- Seleccionar Ordenamiento --</option>
+                                    <option value="Reglamento interior">Reglamento interior</option>
+                                    <option value="Estatuto orgánico">Estatuto orgánico</option>
+                                    <option value="Manual de organización general">Manual de organización general
+                                    </option>
+                                    <option value="Manual de organización específico">Manual de organización específico
+                                    </option>
+                                    <option value="Acuerdo">Acuerdo</option>
+                                    <option value="No aplica">No aplica</option>
+                                    <option value="OTRO">Otro:</option>
+                                </select>
+                                <div x-show="nuevaUnidad.ordenamientoRA === 'OTRO'" x-cloak class="mt-2">
+                                    <input type="text" x-model="nuevaUnidad.otroOrdenamientoRA"
+                                        placeholder="Especifique el tipo..."
+                                        class="w-full p-2 bg-white border border-chiapas-arena text-xs">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-bold text-chiapas-negro mb-1">
+                                    26. NOMBRE DEL ORDENAMIENTO <span class="text-chiapas-rojo">*</span>
+                                </label>
+                                <p class="text-[11px] text-neutral-500 mb-1">Indicar nombre completo (o 'No
+                                    aplica').</p>
+                                <input type="text" x-model="nuevaUnidad.nombreOrdenamientoRA" required
+                                    placeholder="Nombre completo oficial..."
+                                    class="w-full p-2.5 bg-white border border-chiapas-arena text-xs">
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-bold text-chiapas-negro mb-1">
+                                    27. FECHA ÚLTIMA PUBLICACIÓN <span class="text-chiapas-rojo">*</span>
+                                </label>
+                                <p class="text-[11px] text-neutral-500 mb-1">Fecha de publicación más reciente.
+                                </p>
+                                <input type="text" x-model="nuevaUnidad.fechaRA" required
+                                    placeholder="AAAA-MM-DD o 'No aplica'"
+                                    class="w-full p-2.5 bg-white border border-chiapas-arena text-xs">
+                            </div>
+
+                            <div class="sm:col-span-2">
+                                <label class="block text-xs font-bold text-chiapas-negro mb-1">
+                                    29. URL DEL ORDENAMIENTO <span class="text-chiapas-rojo">*</span>
+                                </label>
+                                <p class="text-[11px] text-neutral-500 mb-1">Liga de consulta del ordenamiento (o 'No
+                                    aplica').</p>
+                                <input type="text" x-model="nuevaUnidad.urlRA" required
+                                    placeholder="https://... o 'No aplica'"
+                                    class="w-full p-2.5 bg-white border border-chiapas-arena text-xs">
+                            </div>
+
+                            <div class="sm:col-span-2">
+                                <label class="block text-xs font-bold text-chiapas-negro mb-1">
+                                    28. FUNDAMENTO ATRIBUCIONES PARA GENERAR RA <span
+                                        class="text-chiapas-rojo">*</span>
+                                </label>
+                                <p class="text-[11px] text-neutral-500 mb-1">Indicar artículo, fracción y texto (o 'No
+                                    aplica').</p>
+                                <textarea x-model="nuevaUnidad.fundamentoRA" rows="2" required
+                                    placeholder="Artículo X, Fracción Y y transcripción del texto..."
+                                    class="w-full p-2 bg-white border border-chiapas-arena text-xs"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SECCIÓN DE PARTICIPACIÓN INTEGRADA POR CADA UNIDAD (PREGUNTAS 30 A 33) -->
+                    <div class="border border-chiapas-arena/60 border-l-4 border-l-chiapas-verde p-4 sm:p-5 space-y-4">
+                        <div class="pb-2 border-b border-chiapas-arena/40">
+                            <h4 class="text-sm font-bold text-chiapas-negro uppercase">Participación de esta Unidad o
+                                Área:</h4>
+                            <p class="text-xs text-neutral-500">Indique la participación en el CEIEG, REN, RNIG y
+                                registre cualquier precisión adicional correspondiente a esta unidad.</p>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+
+                            <!-- 30. PARTICIPA EN CEIEG -->
+                            <div class="bg-[#fbfaf8] border border-chiapas-arena/60 p-3">
+                                <label class="block text-xs font-bold text-chiapas-negro mb-1">
+                                    30. PARTICIPA EN CEIEG <span class="text-chiapas-rojo">*</span>
+                                </label>
+                                <p class="text-[11px] text-neutral-500 mb-2">¿Participa esta unidad en el CEIEG de la
+                                    entidad?</p>
+                                <div class="flex gap-4 text-xs font-semibold">
+                                    <label class="flex items-center gap-1.5 cursor-pointer">
+                                        <input type="radio" value="Sí" x-model="nuevaUnidad.participaCeieg"
+                                            class="text-chiapas-rojo">
+                                        <span>Sí</span>
+                                    </label>
+                                    <label class="flex items-center gap-1.5 cursor-pointer">
+                                        <input type="radio" value="No" x-model="nuevaUnidad.participaCeieg"
+                                            class="text-chiapas-rojo">
+                                        <span>No</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- 31. PARTICIPA EN REN -->
+                            <div class="bg-[#fbfaf8] border border-chiapas-arena/60 p-3">
+                                <label class="block text-xs font-bold text-chiapas-negro mb-1">
+                                    31. PARTICIPA EN REN <span class="text-chiapas-rojo">*</span>
+                                </label>
+                                <p class="text-[11px] text-neutral-500 mb-2">¿Tiene alguna ficha inscrita en el
+                                    REN?</p>
+                                <div class="flex gap-4 text-xs font-semibold">
+                                    <label class="flex items-center gap-1.5 cursor-pointer">
+                                        <input type="radio" value="Sí" x-model="nuevaUnidad.participaRen"
+                                            class="text-chiapas-rojo">
+                                        <span>Sí</span>
+                                    </label>
+                                    <label class="flex items-center gap-1.5 cursor-pointer">
+                                        <input type="radio" value="No" x-model="nuevaUnidad.participaRen"
+                                            class="text-chiapas-rojo">
+                                        <span>No</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- 32. PARTICIPA EN RNIG -->
+                            <div class="bg-[#fbfaf8] border border-chiapas-arena/60 p-3">
+                                <label class="block text-xs font-bold text-chiapas-negro mb-1">
+                                    32. PARTICIPA EN RNIG <span class="text-chiapas-rojo">*</span>
+                                </label>
+                                <p class="text-[11px] text-neutral-500 mb-2">¿Tiene alguna ficha inscrita en el
+                                    RNIG?</p>
+                                <div class="flex gap-4 text-xs font-semibold">
+                                    <label class="flex items-center gap-1.5 cursor-pointer">
+                                        <input type="radio" value="Sí" x-model="nuevaUnidad.participaRnig"
+                                            class="text-chiapas-rojo">
+                                        <span>Sí</span>
+                                    </label>
+                                    <label class="flex items-center gap-1.5 cursor-pointer">
+                                        <input type="radio" value="No" x-model="nuevaUnidad.participaRnig"
+                                            class="text-chiapas-rojo">
+                                        <span>No</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- 33. NOTAS DE LA UNIDAD -->
+                            <div class="sm:col-span-3">
+                                <label class="block text-xs font-bold text-chiapas-negro mb-1">
+                                    33. NOTAS / OBSERVACIONES DE LA UNIDAD
+                                </label>
+                                <p class="text-[11px] text-neutral-500 mb-1">En caso de que sea necesario precisar algo
+                                    adicional sobre esta unidad o sus ordenamientos.</p>
+                                <textarea x-model="nuevaUnidad.notas" rows="2"
+                                    placeholder="Observaciones particulares de esta unidad administrativa..."
+                                    class="w-full p-2 bg-white border border-chiapas-arena text-xs"></textarea>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- PIE DEL MODAL (BOTÓN GUARDAR) -->
+                <div class="flex items-center justify-end gap-3 pt-4 border-t border-chiapas-arena/60">
+                    <button type="button" @click="modalAbierto = false"
+                        class="px-5 py-2.5 bg-neutral-200 hover:bg-neutral-300 text-chiapas-negro font-bold text-xs uppercase tracking-wider transition-colors cursor-pointer">
+                        Cancelar
+                    </button>
+                    <button type="button" @click="guardarUnidad()"
+                        class="px-6 py-2.5 bg-chiapas-verde hover:bg-[#007d6d] text-white font-bold text-xs uppercase tracking-wider transition-colors cursor-pointer">
+                        Guardar Unidad Administrativa
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+
+</body>
+
+</html>
